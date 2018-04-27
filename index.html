@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Todo list in AngularJs1.x</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./public/bootstrap-4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="./public/styles/main.css">
+    <script src="./public/scripts/jquery-3.3.1.min.js"></script>
+    <script src="./public/bootstrap-4.0.0/js/bootstrap.js"></script>
+    <script src="./public/scripts/angular.js"></script>
+    <script src="./modules/todo.js"></script>
+    <script src="./public/scripts/lodash.min.js"></script>
+</head>
+
+<body ng-app="todoApp" ng-controller="taskController">
+    <!-- Form to add new task into the list-->
+    <div class="container">
+        <h2>To do list</h2>
+        <form name="taskForm" method="post" novalidate ng-submit="addTask(taskName)">
+            <div class="form-group">
+                <label for="task">Task Name:</label>
+                <input type="text" required ng-minlength="5" ng-maxlength="50" class="form-control" id="task" placeholder="Enter task name"
+                    name="task" ng-model="taskName">
+                <!-- Validation message -->
+                <div class="text-danger" ng-show="taskForm.task.$invalid && 
+                (taskForm.$submitted || taskForm.task.$touched)">
+                    Name is required
+                </div>
+                <!-- Validation message ends-->
+            </div>
+            <button type="submit" class="btn btn-default">Add to the list</button>
+        </form>
+    </div>
+    <!-- Form ends-->
+
+    <!-- List of all tasks -->
+    <div class="container alert alert-primary gap-top" ng-if="tasks.length>0">
+        <h2>Available tasks</h2>
+        <table class=".table .table-striped .table-bordered .table-hover .table-condensed">
+            <thead>
+                <tr>
+                    <th colspan="2">Tasks</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in tasks">
+                    <td>
+                        {{task}}
+                    </td>
+                    <td>
+                        <input type="checkbox" ng-model="x" ng-change="addToRemoveList($index)" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <input type="button" value="Remove selected tasks" ng-click="remove()" class="btn btn-primary" />
+    </div>
+
+    <div class="container alert alert-warning gap-top" ng-if="tasks.length<=0">
+        No tasks in the list
+    </div>
+    <!-- List ends -->
+</body>
+
+</html>
